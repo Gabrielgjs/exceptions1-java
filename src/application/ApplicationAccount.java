@@ -4,6 +4,7 @@ import java.util.Locale;
 import java.util.Scanner;
 
 import model.entities.Account;
+import model.exceptions.BusinessException;
 
 public class ApplicationAccount {
 	public static void main(String[] args) {
@@ -28,16 +29,14 @@ public class ApplicationAccount {
 		System.out.println();
 		System.out.print("Informe a quantia pra sacar: ");
 		double quantia = scan.nextDouble();
-		if (quantia > acc.getLimiteSaque()) {
-			System.out.println("Erro de saque:  A quantia excede o limite de saque ");
-		} 
-		else if (quantia > acc.getSaldo()) {
-			System.out.println("Erro de saque: Saldo insulficiente");
-		}else {
+		 
+		try {
 			acc.saque(quantia);
 			System.out.println("Novo saldo : " + String.format("%.2f", acc.getSaldo()));
 		}
-		
+		catch (BusinessException e) {
+			System.out.println(e.getMessage());
+		}
 		
 		scan.close();
 	}
